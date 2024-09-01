@@ -1,2 +1,2 @@
 # library-fronend-test
-library-fronend-test
+library-frontend-test
