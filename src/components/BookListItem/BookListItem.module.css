@@ -1,0 +1,17 @@
+.accentText {
+  font-weight: 600;
+  font-style: italic;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 8px;
+
+  max-height: 20px;
+}
+
+.btnDelete {
+  /* width: 100%; */
+}
