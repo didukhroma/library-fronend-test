@@ -1,3 +1,14 @@
+.item {
+  text-align: start;
+}
+.thumb {
+  display: flex;
+  align-items: center;
+  flex-direction: wrap;
+}
+.title {
+  margin-right: auto;
+}
 .accentText {
   font-weight: 600;
   font-style: italic;
@@ -12,6 +23,6 @@
   max-height: 20px;
 }
 
-.btnDelete {
-  /* width: 100%; */
+.btn {
+  /* max-width: 100px; */
 }
