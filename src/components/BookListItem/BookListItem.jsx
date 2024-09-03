@@ -30,27 +30,7 @@ const BookListItem = ({ book }) => {
   return (
     <li className={styles.item}>
       <BookForm book={book} showEdit={showEdit} />
-      {/* <div className={styles.thumb}>
-        <h3 className={styles.title}>{title}</h3>
 
-        <p>
-          <span className={styles.accentText}>Author: </span> {author}
-        </p>
-        <p>
-          <span className={styles.accentText}>ISBN: </span> {isbn}
-        </p>
-        {showEditForm && <BookForm />}
-        <div className={styles.wrapper}>
-          <p>
-            <span className={styles.accentText}>Status: </span>
-            {isBorrowed ? bookStatus.borrow : bookStatus.available}
-          </p>
-          <button type="button" onClick={handleClickChangeStatus}>
-            Change Status
-          </button>
-        </div>
-      </div> */}
-      {/* -------------------------- */}
       <div className={styles.btnWrapper}>
         <button
           className={styles.btnEdit}

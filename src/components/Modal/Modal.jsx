@@ -3,6 +3,7 @@ import { closeModal, selectIsModalOpen } from '../../redux/slice.js';
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 import styles from './Modal.module.css';
+
 const Modal = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector(selectIsModalOpen);

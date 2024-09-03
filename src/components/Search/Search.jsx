@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { fetchBooks } from '../../redux/operations.js';
+import { fetchBooksBySearch } from '../../redux/operations.js';
 
 import styles from './Search.module.css';
 const Search = () => {
@@ -8,7 +8,8 @@ const Search = () => {
   const handleSubmit = e => {
     e.preventDefault();
     const searchValue = e.target.search.value.toLowerCase().trim();
-    dispatch(fetchBooks(searchValue));
+    // if (!searchValue) return;
+    dispatch(fetchBooksBySearch(searchValue));
     e.target.search.value = '';
   };
 

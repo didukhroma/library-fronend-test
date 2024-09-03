@@ -1,10 +1,13 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import HomePage from '../../pages/HomePage';
+
+import { lazy } from 'react';
+
+const AsyncHomePage = lazy(() => import('../../pages/HomePage'));
 
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<AsyncHomePage />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

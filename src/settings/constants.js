@@ -1,6 +1,6 @@
 export const notificationMessages = {
   loading: 'Loading data...',
-  nothing: 'Nothing there. Please add  some books.',
+  nothing: 'Nothing there. Please add some books.',
 };
 
 export const bookStatuses = {

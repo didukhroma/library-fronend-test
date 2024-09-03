@@ -1,17 +1,13 @@
 import { useState } from 'react';
 import styles from './BookForm.module.css';
-// import { bookStatuses } from '../../settings/constants.js';
+import { bookStatuses } from '../../settings/constants.js';
 
-const initialState = { title: '', author: '', isbn: '', select: false };
+const initialState = { title: '', author: '', isbn: '', isBorrowed: false };
 
-const BookForm = ({ title, author, isbn, select, showSelect = true }) => {
-  const [fields, setFields] = useState({
-    ...initialState,
-    title,
-    author,
-    isbn,
-    select,
-  });
+const BookForm = ({ book, showEdit }) => {
+  const [fields, setFields] = useState(book || initialState);
+
+  const { title, author, isbn, isBorrowed } = fields;
 
   const handleChange = e => {
     console.dir(e.target);
@@ -26,47 +22,73 @@ const BookForm = ({ title, author, isbn, select, showSelect = true }) => {
     console.log(fields);
   };
 
+  const handleChangeStatus = () => {
+    console.log('changeStatus');
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <label className={styles.label}>
-        <input
-          type="text"
-          name="title"
-          value={fields.title}
-          onChange={handleChange}
-        />
+        {showEdit && <span>Title: </span>}
+        {!showEdit && <span>{title}</span>}
+        {showEdit && (
+          <input
+            type="text"
+            name="title"
+            value={fields.title}
+            onChange={handleChange}
+          />
+        )}
       </label>
       <label className={styles.label}>
-        <span>Author</span>
-        <input
-          type="text"
-          name="author"
-          value={fields.author}
-          onChange={handleChange}
-        />
+        <span>Author: </span>
+        {!showEdit && <span>{author}</span>}
+        {showEdit && (
+          <input
+            type="text"
+            name="author"
+            value={fields.author}
+            onChange={handleChange}
+          />
+        )}
       </label>
       <label className={styles.label}>
-        <span>ISBN</span>
-        <input
-          type="text"
-          name="isbn"
-          value={fields.isbn}
-          onChange={handleChange}
-        />
+        <span>ISBN: </span>
+        {!showEdit && <span>{isbn}</span>}
+        {showEdit && (
+          <input
+            type="text"
+            name="isbn"
+            value={fields.isbn}
+            onChange={handleChange}
+          />
+        )}
       </label>
-      {showSelect && (
-        <label>
-          <span>Status</span>
+
+      <label>
+        <span>Status: </span>
+        {!showEdit && (
+          <span>
+            {isBorrowed ? bookStatuses.borrow : bookStatuses.available}
+          </span>
+        )}
+
+        {showEdit && (
           <select
             name="isBorrowed"
-            value={fields.select}
+            value={isBorrowed}
             onChange={handleChangeSelect}
           >
             <option value="">--Please choose an option--</option>
-            <option value="false">Available in library</option>
-            <option value="true">Borrowed</option>
+            <option value="false">{bookStatuses.available}</option>
+            <option value="true">{bookStatuses.borrow}</option>
           </select>
-        </label>
+        )}
+      </label>
+      {!showEdit && (
+        <button type="button" onClick={handleChangeStatus}>
+          Change status
+        </button>
       )}
     </form>
   );

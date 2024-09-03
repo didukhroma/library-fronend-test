@@ -5,7 +5,14 @@ import {
   isRejected,
 } from '@reduxjs/toolkit';
 
-import { fetchBooks } from './operations.js';
+import {
+  addBook,
+  deleteBook,
+  fetchBooks,
+  fetchBooksBySearch,
+  updateBook,
+  updateBookStatus,
+} from './operations.js';
 
 const handlePending = state => {
   state.isLoading = true;
@@ -51,9 +58,63 @@ const booksSlice = createSlice({
       .addCase(fetchBooks.fulfilled, (state, { payload }) => {
         state.booksList = payload;
       })
-      .addMatcher(isPending(fetchBooks), handlePending)
-      .addMatcher(isFulfilled(fetchBooks), handleFulfilled)
-      .addMatcher(isRejected(fetchBooks), handleRejected);
+      .addCase(fetchBooksBySearch.fulfilled, (state, { payload }) => {
+        state.booksList = payload;
+      })
+      .addCase(addBook.fulfilled, (state, { payload }) => {
+        console.log('add new book');
+        state.booksList.push(payload);
+      })
+      .addCase(updateBook.fulfilled, (state, { payload }) => {
+        console.log('update book');
+        console.log(payload);
+        // state.booksList.push(payload);
+      })
+      .addCase(updateBookStatus.fulfilled, (state, { payload }) => {
+        console.log('update book status');
+        console.log(payload);
+        // state.booksList.push(payload);
+      })
+      .addCase(deleteBook.fulfilled, (state, { payload }) => {
+        const index = state.booksList.findIndex(
+          book => book.isbn === payload.isbn
+        );
+
+        state.booksList.splice(index, 1);
+      })
+      .addMatcher(
+        isPending(
+          fetchBooks,
+          fetchBooksBySearch,
+          addBook,
+          updateBook,
+          updateBookStatus,
+          deleteBook
+        ),
+        handlePending
+      )
+      .addMatcher(
+        isFulfilled(
+          fetchBooks,
+          fetchBooksBySearch,
+          addBook,
+          updateBook,
+          updateBookStatus,
+          deleteBook
+        ),
+        handleFulfilled
+      )
+      .addMatcher(
+        isRejected(
+          fetchBooks,
+          fetchBooksBySearch,
+          addBook,
+          updateBook,
+          updateBookStatus,
+          deleteBook
+        ),
+        handleRejected
+      );
   },
   selectors: {
     selectBooksList: state => state.booksList,
