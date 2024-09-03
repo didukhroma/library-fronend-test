@@ -1,35 +1,41 @@
-import { useEffect, useState } from 'react';
-import { getBooks } from '../../api/api.js';
+import { useEffect } from 'react';
 import Notification from '../Notification';
 import Books from '../Books';
 import Search from '../Search';
 import Container from '../Container';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  clearError,
+  selectBooksList,
+  selectError,
+  selectIsLoading,
+} from '../../redux/slice.js';
+import { fetchBooks } from '../../redux/operations.js';
+
+import styles from './Home.module.css';
 
 const Home = () => {
-  const [books, setBooks] = useState([]);
-  const [error, setError] = useState('');
-  const [search, setSearch] = useState('');
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+  const errorMessage = useSelector(selectError);
+  const booksList = useSelector(selectBooksList);
 
   useEffect(() => {
-    getBooks(search)
-      .then(setBooks)
-      .catch(({ message }) => setError(message));
-  }, [search]);
-
-  const handleSubmit = searchValue => {
-    setSearch(searchValue);
-  };
+    dispatch(clearError());
+    dispatch(fetchBooks());
+  }, [dispatch]);
 
   return (
-    <section>
+    <section className={styles.section}>
       <Container>
-        <h1>Library</h1>
-        <Search cbOnSubmit={handleSubmit} />
+        <h1 className={styles.mainTitle}>Library</h1>
+        <Search />
         <h2>Book list</h2>
+        {isLoading && <Notification message={'Loading data...'} />}
 
-        <Books books={books} />
+        <Books books={booksList} />
 
-        {error && <Notification message={error} />}
+        {errorMessage && <Notification message={errorMessage} />}
       </Container>
     </section>
   );

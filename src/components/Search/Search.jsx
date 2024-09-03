@@ -1,24 +1,33 @@
-// import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchBooks } from '../../redux/operations.js';
+
 import styles from './Search.module.css';
-const Search = ({ cbOnSubmit }) => {
+const Search = () => {
+  const dispatch = useDispatch();
+
   const handleSubmit = e => {
     e.preventDefault();
-    cbOnSubmit(e.target.search.value);
+    const searchValue = e.target.search.value.toLowerCase().trim();
+    dispatch(fetchBooks(searchValue));
     e.target.search.value = '';
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>General Search</h3>
-      <label>
-        <input
-          className={styles.input}
-          type="text"
-          name="search"
-          placeholder="Search for title,author,ISBN"
-        />
-      </label>
-      <button type="submit">Search</button>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <h2 className={styles.title}>General Search</h2>
+      <div className={styles.thumb}>
+        <label className={styles.label}>
+          <input
+            className={styles.input}
+            type="text"
+            name="search"
+            placeholder="Search for title,author,ISBN"
+          />
+        </label>
+        <button className={styles.button} type="submit">
+          Search
+        </button>
+      </div>
     </form>
   );
 };

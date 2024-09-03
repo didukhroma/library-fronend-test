@@ -22,37 +22,40 @@ const BookListItem = ({ book: { title, author, isbn, isBorrowed } }) => {
     <li className={styles.item}>
       <div className={styles.thumb}>
         <h3 className={styles.title}>{title}</h3>
-      </div>
-      <p>
-        <span className={styles.accentText}>Author: </span> {author}
-      </p>
-      <p>
-        <span className={styles.accentText}>ISBN: </span> {isbn}
-      </p>
-      {showEditForm && <BookForm />}
-      <div className={styles.wrapper}>
+
         <p>
-          <span className={styles.accentText}>Status: </span>
-          {isBorrowed ? 'Borrowed' : 'Available in library'}
+          <span className={styles.accentText}>Author: </span> {author}
         </p>
-        <button type="button" onClick={handleClickChangeStatus}>
-          Change Status
+        <p>
+          <span className={styles.accentText}>ISBN: </span> {isbn}
+        </p>
+        {showEditForm && <BookForm />}
+        <div className={styles.wrapper}>
+          <p>
+            <span className={styles.accentText}>Status: </span>
+            {isBorrowed ? 'Borrowed' : 'Available in library'}
+          </p>
+          <button type="button" onClick={handleClickChangeStatus}>
+            Change Status
+          </button>
+        </div>
+      </div>
+      <div className={styles.btnWrapper}>
+        <button
+          className={styles.btn}
+          type="button"
+          onClick={handleClickEditBook}
+        >
+          Edit Book
+        </button>
+        <button
+          className={styles.btn}
+          type="button"
+          onClick={handleClickDeleteBook}
+        >
+          Delete Book
         </button>
       </div>
-      <button
-        className={styles.btn}
-        type="button"
-        onClick={handleClickEditBook}
-      >
-        Edit Book
-      </button>
-      <button
-        className={styles.btn}
-        type="button"
-        onClick={handleClickDeleteBook}
-      >
-        Delete Book
-      </button>
     </li>
   );
 };
