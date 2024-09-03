@@ -1,0 +1,37 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: start;
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+  &:nth-child(odd) {
+    background-color: #f7f7f7;
+  }
+}
+
+.title {
+  margin-right: auto;
+}
+.accentText {
+  font-weight: 600;
+  font-style: italic;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 8px;
+
+  max-height: 20px;
+}
+
+.btnWrapper {
+  flex-shrink: 0;
+}
+.btnEdit {
+  display: block;
+  min-width: 100px;
+}
