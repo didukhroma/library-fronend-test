@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { openModal, selectBooksList } from '../../redux/slice.js';
+import { useSelector } from 'react-redux';
+import { selectBooksList } from '../../redux/slice.js';
 import BookListItem from '../BookListItem/BookListItem.jsx';
 import Notification from '../Notification/Notification.jsx';
 import { notificationMessages } from '../../settings/constants.js';
@@ -11,14 +11,12 @@ import { useState } from 'react';
 const Books = () => {
   const books = useSelector(selectBooksList);
   const [openForm, setOpenForm] = useState(false);
-  const dispatch = useDispatch();
 
   const handleClick = e => {
     if (e.target.textValue === 'Add new book') {
       setOpenForm(prev => !prev);
       e.target.textValue = 'Save';
     }
-    dispatch(openModal());
     setOpenForm(prev => !prev);
   };
 
@@ -35,6 +33,7 @@ const Books = () => {
         </ul>
       )}
 
+      {openForm && <h2>New Book</h2>}
       {openForm && <BookForm showEdit={true} />}
       {!openForm && (
         <button type="button" onClick={handleClick}>

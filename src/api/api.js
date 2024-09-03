@@ -3,33 +3,33 @@ import { BASE_URL } from '../settings/settings.js';
 
 axios.defaults.baseURL = BASE_URL;
 
-export const getBooks = async () => {
+export const getBooksService = async () => {
   const res = await axios.get();
   return res.data.books;
 };
 
-export const getBooksBySearch = async query => {
+export const getBooksBySearchService = async query => {
   const requestStr = `/search?query=${query}`;
   const res = await axios.get(requestStr);
   return res.data.books;
 };
 
-export const addBook = async data => {
-  const res = await axios.post('/books', data);
-  console.log(res);
+export const addBookService = async data => {
+  const res = await axios.post('/', data);
+  return res.data.book;
 };
 
-export const updateBook = async (isbn, data) => {
-  const res = await axios.put(`/${isbn}`, data);
-  console.log(res);
+export const updateBookService = async ({ currentBook, bookData }) => {
+  const res = await axios.put(`/${currentBook}`, bookData);
+  return res.data.updatedBook;
 };
 
-export const updateStatus = async isbn => {
+export const updateStatusService = async isbn => {
   const res = await axios.patch(`/${isbn}/borrow`);
-  console.log(res);
+  return res.data.updatedBook;
 };
 
-export const deleteBook = async isbn => {
+export const deleteBookService = async isbn => {
   const res = await axios.delete(`/${isbn}`);
-  console.log(res);
+  return res.status;
 };

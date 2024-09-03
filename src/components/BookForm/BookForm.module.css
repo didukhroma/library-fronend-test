@@ -1,3 +1,17 @@
 .label {
   display: block;
 }
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  text-align: left;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  min-width: 110px;
+}

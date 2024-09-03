@@ -1,5 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getBooks, getBooksBySearch } from '../api/api.js';
+import {
+  getBooksService,
+  getBooksBySearchService,
+  addBookService,
+  updateBookService,
+  updateStatusService,
+  deleteBookService,
+} from '../api/api.js';
 import {
   addBookOperationType,
   deleteBookOperationType,
@@ -13,7 +20,7 @@ export const fetchBooks = createAsyncThunk(
   fetchBooksOperationType,
   async thunkAPI => {
     try {
-      const response = await getBooks();
+      const response = await getBooksService();
       return response;
     } catch (error) {
       thunkAPI.rejectWithValue(error.message);
@@ -25,7 +32,7 @@ export const fetchBooksBySearch = createAsyncThunk(
   fetchBooksBySearchOperationType,
   async (query, thunkAPI) => {
     try {
-      const response = await getBooksBySearch(query);
+      const response = await getBooksBySearchService(query);
       return response;
     } catch (error) {
       thunkAPI.rejectWithValue(error.message);
@@ -35,9 +42,9 @@ export const fetchBooksBySearch = createAsyncThunk(
 
 export const addBook = createAsyncThunk(
   addBookOperationType,
-  async (isbn, data, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      const response = await addBook(isbn, data);
+      const response = await addBookService(data);
       return response;
     } catch (error) {
       thunkAPI.rejectWithValue(error.message);
@@ -47,9 +54,9 @@ export const addBook = createAsyncThunk(
 
 export const updateBook = createAsyncThunk(
   updateBookOperationType,
-  async (isbn, data, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      const response = await updateBook(isbn, data);
+      const response = await updateBookService(data);
       return response;
     } catch (error) {
       thunkAPI.rejectWithValue(error.message);
@@ -60,7 +67,7 @@ export const updateBookStatus = createAsyncThunk(
   updateBookStatusOperationType,
   async (isbn, thunkAPI) => {
     try {
-      const response = await updateBookStatus(isbn);
+      const response = await updateStatusService(isbn);
       return response;
     } catch (error) {
       thunkAPI.rejectWithValue(error.message);
@@ -72,7 +79,7 @@ export const deleteBook = createAsyncThunk(
   deleteBookOperationType,
   async (isbn, thunkAPI) => {
     try {
-      const response = await deleteBook(isbn);
+      const response = await deleteBookService(isbn);
       return response;
     } catch (error) {
       thunkAPI.rejectWithValue(error.message);

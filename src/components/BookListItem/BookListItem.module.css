@@ -1,7 +1,7 @@
 .item {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
   text-align: start;
   &:not(:last-child) {
     margin-bottom: 16px;
@@ -11,11 +11,6 @@
   }
 }
 
-.thumb {
-  /* display: flex;
-  align-items: center;
-  flex-direction: wrap; */
-}
 .title {
   margin-right: auto;
 }
@@ -34,10 +29,6 @@
 }
 
 .btnWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  flex-basis: 180px;
   flex-shrink: 0;
 }
 .btnEdit {

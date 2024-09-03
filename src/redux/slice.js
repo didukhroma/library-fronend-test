@@ -32,6 +32,9 @@ const booksSlice = createSlice({
     isLoading: false,
     error: null,
     isModalOpen: false,
+    modalCase: 0, // 0 - add new, 1 - update, 2 - delete, 3 updateStatus
+    currentBook: null,
+    bookData: null,
   },
   reducers: {
     setError(state, action) {
@@ -46,11 +49,19 @@ const booksSlice = createSlice({
     stopLoader(state) {
       state.isLoading = false;
     },
-    openModal(state) {
+    setCurrentBook(state, action) {
+      state.currentBook = action.payload;
+    },
+    setBookData(state, action) {
+      state.bookData = action.payload;
+    },
+    openModal(state, action) {
       state.isModalOpen = true;
+      state.modalCase = action.payload;
     },
     closeModal(state) {
       state.isModalOpen = false;
+      state.modalCase = 0;
     },
   },
   extraReducers: builder => {
@@ -62,25 +73,36 @@ const booksSlice = createSlice({
         state.booksList = payload;
       })
       .addCase(addBook.fulfilled, (state, { payload }) => {
-        console.log('add new book');
         state.booksList.push(payload);
+        state.isModalOpen = false;
+        state.bookData = null;
       })
       .addCase(updateBook.fulfilled, (state, { payload }) => {
-        console.log('update book');
-        console.log(payload);
-        // state.booksList.push(payload);
+        const index = state.booksList.findIndex(
+          book => book.isbn === state.currentBook
+        );
+        state.booksList.splice(index, 1, payload);
+        state.isModalOpen = false;
+        state.currentBook = null;
+        state.bookData = null;
       })
       .addCase(updateBookStatus.fulfilled, (state, { payload }) => {
-        console.log('update book status');
-        console.log(payload);
-        // state.booksList.push(payload);
+        const index = state.booksList.findIndex(
+          book => book.isbn === state.currentBook
+        );
+        state.booksList.splice(index, 1, payload);
+        state.isModalOpen = false;
+        state.currentBook = null;
       })
       .addCase(deleteBook.fulfilled, (state, { payload }) => {
+        if (payload !== 200) return state;
         const index = state.booksList.findIndex(
-          book => book.isbn === payload.isbn
+          book => book.isbn === state.currentBook
         );
 
         state.booksList.splice(index, 1);
+        state.isModalOpen = false;
+        state.currentBook = null;
       })
       .addMatcher(
         isPending(
@@ -121,6 +143,9 @@ const booksSlice = createSlice({
     selectIsLoading: state => state.isLoading,
     selectError: state => state.error,
     selectIsModalOpen: state => state.isModalOpen,
+    selectIsModalCase: state => state.modalCase,
+    selectCurrentBook: state => state.currentBook,
+    selectBookData: state => state.bookData,
   },
 });
 
@@ -133,6 +158,8 @@ export const {
   stopLoader,
   openModal,
   closeModal,
+  setCurrentBook,
+  setBookData,
 } = booksSlice.actions;
 
 export const {
@@ -140,4 +167,7 @@ export const {
   selectIsLoading,
   selectError,
   selectIsModalOpen,
+  selectIsModalCase,
+  selectCurrentBook,
+  selectBookData,
 } = booksSlice.selectors;
