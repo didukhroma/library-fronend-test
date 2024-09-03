@@ -1,24 +1,20 @@
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Notification from '../Notification';
 import Books from '../Books';
 import Search from '../Search';
 import Container from '../Container';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  clearError,
-  selectBooksList,
-  selectError,
-  selectIsLoading,
-} from '../../redux/slice.js';
+import { clearError, selectError, selectIsLoading } from '../../redux/slice.js';
 import { fetchBooks } from '../../redux/operations.js';
 
 import styles from './Home.module.css';
+import { notificationMessages } from '../../settings/constants.js';
+import Modal from '../Modal/Modal.jsx';
 
 const Home = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const errorMessage = useSelector(selectError);
-  const booksList = useSelector(selectBooksList);
 
   useEffect(() => {
     dispatch(clearError());
@@ -29,14 +25,12 @@ const Home = () => {
     <section className={styles.section}>
       <Container>
         <h1 className={styles.mainTitle}>Library</h1>
-        <Search />
-        <h2>Book list</h2>
-        {isLoading && <Notification message={'Loading data...'} />}
-
-        <Books books={booksList} />
-
+        {!errorMessage && <Search />}
+        {isLoading && <Notification message={notificationMessages.loading} />}
+        {!isLoading && !errorMessage && <Books />}
         {errorMessage && <Notification message={errorMessage} />}
       </Container>
+      <Modal />
     </section>
   );
 };

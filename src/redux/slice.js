@@ -22,9 +22,9 @@ const booksSlice = createSlice({
   name: 'books',
   initialState: {
     booksList: [],
-    searchQuery: '',
     isLoading: false,
     error: null,
+    isModalOpen: false,
   },
   reducers: {
     setError(state, action) {
@@ -38,6 +38,12 @@ const booksSlice = createSlice({
     },
     stopLoader(state) {
       state.isLoading = false;
+    },
+    openModal(state) {
+      state.isModalOpen = true;
+    },
+    closeModal(state) {
+      state.isModalOpen = false;
     },
   },
   extraReducers: builder => {
@@ -53,14 +59,24 @@ const booksSlice = createSlice({
     selectBooksList: state => state.booksList,
     selectIsLoading: state => state.isLoading,
     selectError: state => state.error,
-    selectQuery: state => state.searchQuery,
+    selectIsModalOpen: state => state.isModalOpen,
   },
 });
 
 export const booksReducer = booksSlice.reducer;
 
-export const { setError, clearError, startLoader, stopLoader } =
-  booksSlice.actions;
+export const {
+  setError,
+  clearError,
+  startLoader,
+  stopLoader,
+  openModal,
+  closeModal,
+} = booksSlice.actions;
 
-export const { selectBooksList, selectIsLoading, selectError, selectQuery } =
-  booksSlice.selectors;
+export const {
+  selectBooksList,
+  selectIsLoading,
+  selectError,
+  selectIsModalOpen,
+} = booksSlice.selectors;

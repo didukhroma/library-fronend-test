@@ -1,26 +1,36 @@
-import { useState } from 'react';
+// import { useDispatch } from 'react-redux';
 import BookForm from '../BookForm';
-import styles from './BookListItem.module.css';
-const BookListItem = ({ book: { title, author, isbn, isBorrowed } }) => {
-  const [showEditForm, setShowEditFrom] = useState(false);
+import { btnEditStatuses } from '../../settings/constants.js';
 
-  const handleClickChangeStatus = () => {
-    console.log('changed status');
-  };
+import styles from './BookListItem.module.css';
+import { useState } from 'react';
+import { openModal } from '../../redux/slice.js';
+import { useDispatch } from 'react-redux';
+const BookListItem = ({ book }) => {
+  const [showEdit, setShowEdit] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClickDeleteBook = () => {
-    console.log('deleteBook');
+    // dispatch(deleteBook)
   };
 
   const handleClickEditBook = e => {
+    console.log(e.target.textContent);
+    if (e.target.textContent === btnEditStatuses.save) {
+      return dispatch(openModal());
+    }
     e.target.textContent =
-      e.target.textContent === 'Edit Book' ? 'Accept changes' : 'Edit Book';
-    setShowEditFrom(prev => !prev);
+      e.target.textContent === btnEditStatuses.edit
+        ? btnEditStatuses.save
+        : btnEditStatuses.edit;
+
+    setShowEdit(prev => !prev);
   };
 
   return (
     <li className={styles.item}>
-      <div className={styles.thumb}>
+      <BookForm book={book} showEdit={showEdit} />
+      {/* <div className={styles.thumb}>
         <h3 className={styles.title}>{title}</h3>
 
         <p>
@@ -33,26 +43,23 @@ const BookListItem = ({ book: { title, author, isbn, isBorrowed } }) => {
         <div className={styles.wrapper}>
           <p>
             <span className={styles.accentText}>Status: </span>
-            {isBorrowed ? 'Borrowed' : 'Available in library'}
+            {isBorrowed ? bookStatus.borrow : bookStatus.available}
           </p>
           <button type="button" onClick={handleClickChangeStatus}>
             Change Status
           </button>
         </div>
-      </div>
+      </div> */}
+      {/* -------------------------- */}
       <div className={styles.btnWrapper}>
         <button
-          className={styles.btn}
+          className={styles.btnEdit}
           type="button"
           onClick={handleClickEditBook}
         >
           Edit Book
         </button>
-        <button
-          className={styles.btn}
-          type="button"
-          onClick={handleClickDeleteBook}
-        >
+        <button type="button" onClick={handleClickDeleteBook}>
           Delete Book
         </button>
       </div>

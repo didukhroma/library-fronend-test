@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styles from './BookForm.module.css';
+// import { bookStatuses } from '../../settings/constants.js';
+
 const initialState = { title: '', author: '', isbn: '', select: false };
 
 const BookForm = ({ title, author, isbn, select, showSelect = true }) => {
